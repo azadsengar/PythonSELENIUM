@@ -1,1 +1,81 @@
 
+from selenium import webdriver
+import xlrd
+
+print('Cargo shipping Assignment has began')
+driver = webdriver.Chrome(executable_path="C:\\Users\\Softwares\\Chromedriver_86\\chromedriver.exe")
+driver.get("http://webapps.tekstac.com/Cargo_Shipping_Cost/")
+driver.maximize_window()
+driver.implicitly_wait(5)
+
+driver.find_element_by_id('weight').send_keys('500')
+driver.find_element_by_id('air').click()
+driver.find_element_by_id('calculate').click()
+Result = driver.find_element_by_id('result').text
+
+# print('The result displayed is -> ', Result)
+
+if Result == 'Dear Customer, your total shipping cost is $500':
+    print('The result displayed is -> ', Result)
+
+else:
+    print('Incorrect Data -> ', Result)
+
+
+workbook = xlrd.open_workbook("C:\\Users\\Azad\\Desktop\\azad.xlsx");
+sheet = workbook.sheet_by_name("Sheet1")
+username = sheet.cell_value(1,0)
+password = sheet.cell_value(1,1)
+print('Username is ->' + ' ' + username)
+print('password is ->' + ' ' + password)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+import selenium
+from selenium import webdriver
+import xlrd
+import time
+from xlwt import Workbook
+
+class AddressBook:
+
+    BaseUrl = "http://webapps.tekstac.com/AddressBook/"
+    print('Address Book Assinment has began')
+
+
+    def CreateDriver(self):
+        driver = webdriver.Chrome(executable_path="C:\\Users\\Softwares\\Chromedriver_86\\chromedriver.exe")
+        driver.get(self.BaseUrl)
+        driver.maximize_window()
+        driver.find_element_by_id('nickname').send_keys('Lord Narayan')
+        driver.find_element_by_id('contact').send_keys(9452113070)
+        driver.find_element_by_id('company').send_keys('Infosys')
+        driver.find_element_by_id('city').send_keys('KOLKATA')
+        driver.find_element_by_id('country').send_keys('INDIA')
+        driver.find_element_by_id('type').send_keys('Fighter')
+        driver.implicitly_wait(5)
+
+
+        # time.sleep(10)
+        print('Mission Accomplished')
+
+
+    def SetNewvalues(self):
+        print('Over')
+
+
+    def excelWriting(self):
+        wb = Workbook()
+        sheet1 = wb.add_sheet('Sheet 1')
+        sheet1.write(1, 0, 'ISBT DEHRADUN')
+        sheet1.write(2, 0, 'SHASTRADHARA')
+        sheet1.write(3, 0, 'CLEMEN TOWN')
+        sheet1.write(4, 0, 'RAJPUR ROAD')
+        wb.save('xlwt example.xls')
+
+
+
+obj = AddressBook()
+obj.CreateDriver()
+obj.SetNewvalues()
+obj.excelWriting()
